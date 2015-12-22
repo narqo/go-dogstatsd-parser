@@ -35,4 +35,8 @@ for k, v := range m.Tags {
 go get github.com/narqo/go-dogstatsd-parser
 ~~~
 
+## License
+
+MIT
+
 [DogStatsD]: http://docs.datadoghq.com/guides/dogstatsd/
