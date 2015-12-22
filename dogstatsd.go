@@ -38,7 +38,7 @@ type Metric struct {
 // Parse parses string using DogStatsD metrics format and returns the metric value.
 // DogStatsD format looks like:
 // 	<name>:<value>|<metric_type>|@<sample_rate>|#<tag1_name>:<tag1_value>,<tag2_name>:<tag2_value>...
-//
+// It returns parsed metric and an parse error if encountered.
 func Parse(rawmetric string) (m *Metric, err error) {
 	d := strings.SplitN(rawmetric, ":", 2)
 	if len(d) != 2 {
