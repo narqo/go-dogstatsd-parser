@@ -38,7 +38,7 @@ var parseMetricsTests = []MetricTest{
 		"data.get.time:102|ms",
 		&dogstatsd.Metric{
 			Name: "data.get.time",
-			Value: int64(102),
+			Value: float64(102),
 			Type: dogstatsd.Timer,
 			Rate: 1,
 		},
@@ -98,6 +98,42 @@ var parseMetricsTests = []MetricTest{
 			Name: "a.key.with-0.dash",
 			Value: int64(4),
 			Type: dogstatsd.Counter,
+			Rate: 1,
+		},
+	},
+	{
+		"gossip:0.008994|ms",
+		&dogstatsd.Metric{
+			Name: "gossip",
+			Value: float64(0.008994),
+			Type: dogstatsd.Timer,
+			Rate: 1,
+		},
+	},
+	{
+		"udp.sent:61.000000|c",
+		&dogstatsd.Metric{
+			Name: "udp.sent",
+			Value: int64(61),
+			Type: dogstatsd.Counter,
+			Rate: 1,
+		},
+	},
+	{
+		"queue.Intent:0.000000|ms",
+		&dogstatsd.Metric{
+			Name: "queue.Intent",
+			Value: float64(0.0),
+			Type: dogstatsd.Timer,
+			Rate: 1,
+		},
+	},
+	{
+		"runtime.alloc_bytes:1780136.000000|g",
+		&dogstatsd.Metric{
+			Name: "runtime.alloc_bytes",
+			Value: float64(1780136),
+			Type: dogstatsd.Gauge,
 			Rate: 1,
 		},
 	},
