@@ -61,33 +61,37 @@ func parse(name, rawval, rawtype string, tail []string) (m *Metric, err error) {
 		Rate: float32(1),
 	}
 
+	var val interface{}
+
 	switch m.Type {
 	case Set:
-		m.Value = string(rawval)
+		val = string(rawval)
 
 	case Counter:
-		if m.Value, err = strconv.ParseInt(rawval, 10, 64); err != nil {
+		if val, err = strconv.ParseFloat(rawval, 64) ; err != nil {
 			return nil, err
 		}
+		val = int64(val.(float64))
 
 	case Gauge, Histogram:
-		if m.Value, err = strconv.ParseFloat(rawval, 64); err != nil {
+		if val, err = strconv.ParseFloat(rawval, 64); err != nil {
 			return nil, err
 		}
 
 	case Timer:
-		val, err := strconv.ParseInt(rawval, 10, 64)
-		if err != nil {
+		if v, err := strconv.ParseFloat(rawval, 64); err != nil {
 			return nil, err
-		}
-		if val < 0 {
+		} else if v < 0 {
 			return nil, fmt.Errorf("Timer value can not be less than 0")
+		} else {
+			val = v
 		}
-		m.Value = val
 
 	default:
 		return nil, fmt.Errorf("Unknown metric type %q", m.Type)
 	}
+
+	m.Value = val
 
 	for _, meta := range tail {
 		if meta[0] == '@' {
