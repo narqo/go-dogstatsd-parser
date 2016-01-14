@@ -1,6 +1,6 @@
 # go-dogstatsd-parser
-
 [![Build Status](https://travis-ci.org/narqo/go-dogstatsd-parser.svg?branch=master)](https://travis-ci.org/narqo/go-dogstatsd-parser)
+[![GoDoc](https://godoc.org/github.com/narqo/go-dogstatsd-parser?status.svg)](https://godoc.org/github.com/narqo/go-dogstatsd-parser)
 
 A standalone parser for [DogStatsD] metrics protocol.
 
