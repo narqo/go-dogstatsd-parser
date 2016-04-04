@@ -137,6 +137,15 @@ var parseMetricsTests = []MetricTest{
 			Rate: 1,
 		},
 	},
+	{
+		"users.logged_in:42.000000|m",
+		&dogstatsd.Metric{
+			Name: "users.logged_in",
+			Value: int64(42),
+			Type: dogstatsd.Meter,
+			Rate: 1,
+		},
+	},
 }
 
 func TestParse(t *testing.T) {

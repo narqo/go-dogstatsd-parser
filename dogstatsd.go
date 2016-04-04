@@ -22,8 +22,9 @@ const (
 	Counter   MetricType = "c"
 	Gauge     MetricType = "g"
 	Histogram MetricType = "h"
-	Timer     MetricType = "ms"
+	Meter     MetricType = "m"
 	Set       MetricType = "s"
+	Timer     MetricType = "ms"
 )
 
 // Metric represents a single parsed metric.
@@ -35,7 +36,7 @@ type Metric struct {
 	Tags  map[string]string
 }
 
-// Parse parses string using DogStatsD metrics format and returns the metric value.
+// Parse parses string using (Dog)StatsD metrics format and returns the metric value.
 // DogStatsD format looks like:
 // 	<name>:<value>|<metric_type>|@<sample_rate>|#<tag1_name>:<tag1_value>,<tag2_name>:<tag2_value>...
 // It returns parsed metric and an parse error if encountered.
@@ -72,6 +73,15 @@ func parse(name, rawval, rawtype string, tail []string) (m *Metric, err error) {
 			return nil, err
 		}
 		val = int64(val.(float64))
+
+	case Meter:
+		if v, err := strconv.ParseFloat(rawval, 64) ; err != nil {
+			return nil, err
+		} else if v < 0 {
+			return nil, fmt.Errorf("Meter value can not be less than 0")
+		} else {
+			val = int64(v)
+		}
 
 	case Gauge, Histogram:
 		if val, err = strconv.ParseFloat(rawval, 64); err != nil {
